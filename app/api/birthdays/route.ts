@@ -1,11 +1,9 @@
 import { NextResponse } from 'next/server'
-import prisma from '@/app/lib/prisma'
+import { getBirthdays, createBirthday } from '@/app/lib/db'
 
 export async function GET() {
   try {
-    const birthdays = await prisma.birthday.findMany({
-      orderBy: { birthDate: 'asc' }
-    });
+    const birthdays = await getBirthdays();
     return NextResponse.json(birthdays);
   } catch (error) {
     console.error('Error fetching birthdays:', error);
@@ -21,12 +19,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Name and birthDate are required' }, { status: 400 });
     }
 
-    const birthday = await prisma.birthday.create({
-      data: {
-        name: data.name,
-        birthDate: new Date(data.birthDate)
-      }
-    });
+    const birthday = await createBirthday(data.name, new Date(data.birthDate));
     return NextResponse.json(birthday);
   } catch (error) {
     console.error('Error creating birthday:', error);
