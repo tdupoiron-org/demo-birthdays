@@ -1,6 +1,6 @@
 {
-    "servers": {
-        "postgres": {
+  "servers": {
+    "postgres": {
       "command": "npx",
       "args": [
         "-y",
@@ -8,5 +8,5 @@
         "postgresql://postgres:postgres@localhost:5432/birthdays"
       ]
     }
-    }
+  }
 }
